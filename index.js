@@ -1,5 +1,6 @@
 var main_data;
 var current_data;
+var base_header;
 
 var states = {
   id: 0,
@@ -21,7 +22,7 @@ var enable_col = {
 
 function build_table(data) {
   const headerTable = document.getElementById("table_header");
-  let header_val = headerTable.children[0].innerHTML;
+  let header_val = base_header.map((x) => x);
   if (enable_col.publisher == 1)
     header_val += `<th scope="col" id="tb-publisher">Publisher</th>`
   if (enable_col.deadline == 1)
@@ -54,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(data => {
       main_data = data.map((x) => x);
       current_data = data.map((x) => x);
-
+      base_header = document.getElementById("table_header").children[0].innerHTML;
       build_table(main_data);
     })
     .catch(error => console.error("Error fetching JSON data:", error));
